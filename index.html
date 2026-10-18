@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="nl"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>BAFFE</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#ff5a1f">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
+<style>
+:root{--bg:#f4f5fa;--card:#fff;--tx:#161a2b;--mu:#6b7088;--ac:#ff5a1f;--ac2:#ff2d6f;--bd:#e8eaf2;--ok:#12b76a;--sh:0 8px 24px -12px rgba(22,26,43,.18);box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1020;--card:#181b30;--tx:#eef0fa;--mu:#9aa0bc;--bd:#272b45;--ac:#ff7a45;--ac2:#ff4f8b;--ok:#32d583;--sh:0 8px 24px -12px rgba(0,0,0,.6);color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1020;--card:#181b30;--tx:#eef0fa;--mu:#9aa0bc;--bd:#272b45;--ac:#ff7a45;--ac2:#ff4f8b;--ok:#32d583;--sh:0 8px 24px -12px rgba(0,0,0,.6);color-scheme:dark}
+*{box-sizing:border-box}html,body{margin:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.45 system-ui,-apple-system,Roboto,sans-serif;padding-bottom:76px}
+main{max-width:560px;margin:0 auto;padding:14px}
+h2{font-size:18px;margin:6px 0 10px}h3{font-size:15px;margin:0 0 4px}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;margin-bottom:10px}
+.mu{color:var(--mu);font-size:13px}
+.b{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:9px 13px;font:inherit;font-weight:600;margin:6px 6px 0 0}
+.b.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}
+.tease{background:var(--ac);color:#fff;border-radius:14px;padding:12px;margin-bottom:10px;font-weight:600}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);display:flex;padding-bottom:env(safe-area-inset-bottom,0px)}
+nav button{flex:1;background:none;border:0;color:var(--mu);padding:10px 0;font:inherit;font-size:12px}
+nav button.on{color:var(--ac);font-weight:700}
+input,select,textarea{width:100%;padding:9px;border:1px solid var(--bd);border-radius:9px;background:var(--bg);color:var(--tx);font:inherit;margin:3px 0 9px}
+label{font-size:13px;color:var(--mu)}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.d{border:1px solid var(--bd);border-radius:9px;min-height:46px;padding:3px 0;font-size:12px;background:var(--card)}
+.d.t{border-color:var(--ac)}.d.s{background:var(--ac);color:#fff}.d.dn{opacity:.55}
+.av{width:72px;height:72px;border-radius:50%;object-fit:cover;background:var(--bd);display:flex;align-items:center;justify-content:center;font-size:30px}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ok)}
+.tag{display:inline-block;font-size:11px;border:1px solid var(--bd);border-radius:8px;padding:1px 6px;margin-left:4px}
+ul{margin:4px 0 0;padding-left:18px}a{color:var(--ac)}
+button,input,select,textarea{font-family:inherit}
+body{font-family:'Poppins',system-ui,-apple-system,Roboto,sans-serif;font-size:14px;padding-bottom:100px}
+h2{font-size:20px;font-weight:700;letter-spacing:-.01em}h3{font-weight:600}
+.c{border:0;border-radius:22px;padding:16px;box-shadow:var(--sh)}
+.b{background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:999px;padding:10px 18px;font-weight:600;box-shadow:0 8px 18px -8px var(--ac)}
+.b.g{background:var(--card);color:var(--tx);border:1px solid var(--bd);box-shadow:none}
+.tease{background:linear-gradient(135deg,var(--ac),var(--ac2));border-radius:22px;padding:16px;box-shadow:0 14px 28px -14px var(--ac2)}
+nav{left:12px;right:12px;bottom:calc(10px + env(safe-area-inset-bottom,0px));max-width:536px;margin:0 auto;border:1px solid var(--bd);border-radius:26px;box-shadow:var(--sh);padding:6px}
+nav button{border-radius:20px;font-weight:500}
+nav button.on{background:color-mix(in srgb,var(--ac) 14%,transparent)}
+input,select{border-radius:14px;border:1px solid var(--bd)}
+.d{border:0;border-radius:14px;box-shadow:var(--sh)}.d.t{outline:2px solid var(--ac)}
+.d.s{background:linear-gradient(135deg,var(--ac),var(--ac2))}
+.bar{height:10px}.bar i{background:linear-gradient(90deg,var(--ac),var(--ac2))}
+.tag{border-radius:999px;padding:1px 8px}
+.hero{display:flex;gap:14px;align-items:center;margin:4px 0 16px}
+.hero .av{width:56px;height:56px;font-size:24px;flex:none}
+svg.i{vertical-align:-4px}nav svg{display:block;margin:0 auto 2px}
+.ex{list-style:none;padding:0}.ex li{display:flex;gap:12px;align-items:center;padding:8px 0;border-top:1px solid var(--bd)}.ex svg{flex:none;color:var(--ac);background:var(--bg);border-radius:14px;padding:4px}
+.ch{display:flex;align-items:center;justify-content:space-between;margin:6px 0 10px}.ch h2{margin:0;text-transform:capitalize}.ch .b{padding:8px 10px;margin:0}
+.grid{gap:2px}.d{background:transparent;box-shadow:none;min-height:54px;padding-top:7px;border-radius:16px}.d b{font-weight:500}.d.t{outline:0}.d.t b{color:var(--ac);font-weight:700}.d.s,.d.s b{color:#fff}.d.s .dt{background:#fff}
+.dots{display:flex;justify-content:center;gap:3px;margin-top:4px;min-height:6px}.dt{width:6px;height:6px;border-radius:50%;background:var(--ac)}.dt.int{background:#7c5cff}.dt.long{background:#1d9bf0}.dt.str{background:var(--ok)}.dt.rest{background:var(--bd)}.dt.ok{opacity:.35}
+.sw{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:6px}.sw button{width:34px;height:34px;border-radius:50%;border:2px solid var(--bd)}.sw input{width:44px;height:34px;padding:0;margin:0;border:0;background:none}
+.sheet{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;z-index:20}.sheet>div{background:var(--card);width:100%;max-width:560px;margin:0 auto;border-radius:26px 26px 0 0;padding:20px 20px calc(20px + env(safe-area-inset-bottom,0px))}
+.rt{display:flex;gap:6px;margin-top:6px}.rt button{background:var(--bg);border:1px solid var(--bd);color:var(--mu);border-radius:16px;padding:6px;line-height:0}.rt button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;border-color:transparent}
+html[data-dk] .c,html[data-dk] nav,html[data-dk] .sheet>div{--card:#fff;--tx:#161a2b;--mu:#6b7088;--bd:#e8eaf2;--bg:#f4f5fa;--ac:#ff5a1f;--ac2:#ff2d6f;color:var(--tx)}
+body{background-image:radial-gradient(520px 340px at 105% -4%,color-mix(in srgb,var(--ac) 30%,transparent),transparent 70%),radial-gradient(460px 380px at -12% 28%,color-mix(in srgb,var(--ac2) 22%,transparent),transparent 70%),radial-gradient(420px 320px at 90% 95%,color-mix(in srgb,#7c5cff 18%,transparent),transparent 70%);background-attachment:fixed}
+.c{background:color-mix(in srgb,var(--card) 80%,transparent);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border:1px solid color-mix(in srgb,var(--card) 55%,var(--bd));box-shadow:0 18px 40px -22px rgba(30,20,80,.35),0 2px 6px -2px rgba(30,20,80,.08);border-radius:26px;padding:18px}
+@keyframes up{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}@keyframes sh{0%,100%{background-position:0 50%}50%{background-position:100% 50%}}
+.c,.tease,.hero{animation:up .55s cubic-bezier(.2,.8,.2,1) both}.c:nth-child(2){animation-delay:.05s}.c:nth-child(3){animation-delay:.1s}.c:nth-child(4){animation-delay:.15s}
+@media (prefers-reduced-motion:reduce){.c,.tease,.hero{animation:none}}
+.hero{margin:6px 0 18px}.hero h2{font-size:28px;line-height:1.1;font-weight:700;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .av{width:60px;height:60px;box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--ac2),0 12px 24px -8px var(--ac2)}
+.hero .mu{text-transform:uppercase;letter-spacing:.12em;font-size:11px;font-weight:600}
+.tease{background:linear-gradient(120deg,var(--ac),var(--ac2),#7c5cff,var(--ac));background-size:240% 240%;animation:up .55s both,sh 9s ease infinite;border-radius:26px;padding:18px;font-size:15px;box-shadow:0 22px 40px -20px var(--ac2)}
+.c h3>svg.i{width:36px;height:36px;padding:8px;border-radius:13px;background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;vertical-align:middle;margin-right:10px;box-shadow:0 10px 18px -8px var(--ac2)}
+.t-int h3>svg.i{background:linear-gradient(135deg,#7c5cff,#c24bff)}.t-long h3>svg.i{background:linear-gradient(135deg,#1d9bf0,#22d3ee)}.t-str h3>svg.i{background:linear-gradient(135deg,#12b76a,#9be15d)}.t-rest h3>svg.i{background:linear-gradient(135deg,#8b95b0,#c3cade)}
+.stat{display:flex;align-items:center;gap:16px;margin-bottom:12px}.big{font-size:40px;font-weight:700;line-height:1;background:linear-gradient(90deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
+.bar{height:12px;border-radius:99px}.bar i{border-radius:99px;box-shadow:0 0 14px var(--ac2)}
+.b{box-shadow:0 12px 22px -10px var(--ac2);transition:transform .15s}.b:active{transform:scale(.96)}.b.g{backdrop-filter:blur(10px)}
+nav{background:color-mix(in srgb,var(--card) 74%,transparent);-webkit-backdrop-filter:blur(20px) saturate(1.5);backdrop-filter:blur(20px) saturate(1.5);border-radius:30px;box-shadow:0 22px 44px -18px rgba(30,20,80,.45);padding:7px}
+nav button{border-radius:24px;padding:9px 0;transition:all .2s}nav button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;box-shadow:0 10px 20px -8px var(--ac2)}
+input:focus,select:focus{outline:2px solid var(--ac);outline-offset:1px}
+.d.s{box-shadow:0 12px 22px -10px var(--ac2)}.d.t:not(.s){background:color-mix(in srgb,var(--ac) 12%,transparent)}
+h2{font-size:21px;margin:18px 0 10px}.ch h2{margin:0}
+.seg{display:flex;gap:4px;background:color-mix(in srgb,var(--card) 70%,transparent);border-radius:999px;padding:5px;margin-bottom:14px;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.seg button{flex:1;border:0;background:none;border-radius:999px;padding:10px 4px;font-weight:600;color:var(--mu);font-size:12px;font-family:inherit}
+.seg button.on{background:linear-gradient(135deg,var(--ac),var(--ac2));color:#fff;box-shadow:0 10px 18px -8px var(--ac2)}
+.zt{width:100%;border-collapse:collapse}.zt th{text-align:left;font-size:11px;color:var(--mu);font-weight:600;padding:4px}.zt td{padding:9px 4px;border-top:1px solid var(--bd);font-size:12.5px;vertical-align:top}
+.sheet>div{max-height:88vh;overflow:auto}
+</style></head><body>
+<main id="v"></main>
+<nav id="nv"></nav>
+<script>
+const $=s=>document.querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+let S=null;try{S=JSON.parse(localStorage.getItem('lc')||'null')}catch(e){}
+S=S||{p:null,plan:[],sleep:{},photo:'',inbox:[],last:''};
+const save=()=>{try{localStorage.setItem('lc',JSON.stringify(S))}catch(e){}};
+const pad=n=>String(n).padStart(2,'0');
+const iso=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+const D=s=>new Date(s+'T12:00:00');
+const add=(s,n)=>{const d=D(s);d.setDate(d.getDate()+n);return iso(d)};
+const diff=(a,b)=>Math.round((D(a)-D(b))/864e5);
+const today=iso(new Date());
+const monday=s=>add(s,-((D(s).getDay()+6)%7));
+const r5=x=>Math.round(x*2)/2;
+const DAGEN=['ma','di','wo','do','vr','za','zo'];
+const ICON={run:'🏃',int:'⚡',long:'🛣️',str:'💪',rest:'😴'};
+const GOALS={'5k':{n:'5 km',peak:25,long:8},'10k':{n:'10 km',peak:35,long:12},'21k':{n:'Halve marathon',peak:45,long:18},'42k':{n:'Marathon',peak:65,long:32},'50k':{n:'50 km',peak:75,long:35},'60k':{n:'60 km',peak:85,long:38},'100k':{n:'100 km',peak:100,long:42},'fit':{n:'Conditie behouden',peak:20,long:10}};
+const RUND={3:[1,3,6],4:[1,3,5,6],5:[0,1,3,5,6]};
+const ic=(p,s=18)=>'<svg class="i" viewBox="0 0 24 24" width="'+s+'" height="'+s+'" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">'+p+'</svg>';
+const I={home:ic('<path d="M3 11l9-8 9 8"/><path d="M5 10v10h14V10"/>',22),cal:ic('<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',22),moon:ic('<path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/>',22),user:ic('<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/>',22),l:ic('<path d="M15 6l-6 6 6 6"/>'),r:ic('<path d="M9 6l6 6-6 6"/>')};
+const NI={v:I.home,k:I.cal,s:I.moon,p:I.user};
+Object.assign(ICON,{run:ic('<path d="M3 12h4l3-8 4 16 3-8h4"/>'),int:ic('<path d="M13 2L4 14h7l-1 8 9-12h-7z"/>'),long:ic('<circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="6" r="2.5"/><path d="M8.5 18H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/>'),str:ic('<path d="M6 7v10M18 7v10M3 10v4M21 10v4M6 12h12"/>'),rest:ic('<path d="M20 14.5A8 8 0 1 1 9.5 4 6.5 6.5 0 0 0 20 14.5z"/>')});
+const RP='dur="2s" repeatCount="indefinite"';
+function fig(t){const W=a=>'<svg viewBox="0 0 80 60" width="76" height="57" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">'+a+'</svg>',fl='<path d="M4 56H76" opacity=".4"/>';
+ if(/bridge/i.test(t))return W('<circle cx="7" cy="47" r="5"/><path d="M12 50L36 50L52 38L58 50"><animate attributeName="d" '+RP+' values="M12 50L36 50L52 38L58 50;M12 50L36 36L52 36L58 50;M12 50L36 50L52 38L58 50"/></path>'+fl);
+ if(/plank|dead bug|clamshell/i.test(t))return W('<circle cx="14" cy="26" r="5"/><path d="M20 32L64 44M20 32V48M10 48H28"><animate attributeName="d" '+RP+' values="M20 32L64 44M20 32V48M10 48H28;M20 30L64 41M20 30V48M10 48H28;M20 32L64 44M20 32V48M10 48H28"/></path>'+fl);
+ if(/romanian|deadlift/i.test(t))return W('<circle cx="40" cy="10" r="5"><animate attributeName="cx" values="40;62;40" dur="2.4s" repeatCount="indefinite"/><animate attributeName="cy" values="10;28;10" dur="2.4s" repeatCount="indefinite"/></circle><path d="M40 18L40 38L40 54"><animate attributeName="d" values="M40 18L40 38L40 54;M57 30L40 38L40 54;M40 18L40 38L40 54" dur="2.4s" repeatCount="indefinite"/></path><path d="M40 38L40 50"><animate attributeName="d" values="M40 38L40 50;M40 38L20 34;M40 38L40 50" dur="2.4s" repeatCount="indefinite"/></path>'+fl);
+ if(/kuit|tibialis/i.test(t))return W('<g><animateTransform attributeName="transform" type="translate" values="0 0;0 -5;0 0" '+RP+'/><circle cx="40" cy="10" r="5"/><path d="M40 16V54M40 22L30 32M40 22L50 32"/></g>'+fl);
+ return W('<g><animateTransform attributeName="transform" type="rotate" values="-4 40 54;4 40 54;-4 40 54" dur="2.4s" repeatCount="indefinite"/><circle cx="40" cy="10" r="5"/><path d="M40 16V54M40 36L52 44L52 52M40 22L28 30M40 22L52 30"/></g>'+fl)}
+const FM=['M8 16.5c1-2 7-2 8 0','M9 15.5c2-1 4-1 6 0','M9 15h6','M8.5 14c1.5 2 5.5 2 7 0','M7.5 13.5h9a4.5 4.5 0 0 1-9 0z'],FL=['Zwaar','Pittig','Oké','Goed','Top'];
+const FACE=n=>ic('<circle cx="12" cy="12" r="9.5"/><path d="M9 9.5h.01M15 9.5h.01"/><path d="'+FM[n-1]+'"/>',28);
+const RT=it=>'<div class="mu" style="margin-top:10px">Hoe was de training?'+(it.rate?' <b>'+FL[it.rate-1]+'</b>':'')+'</div><div class="rt">'+[1,2,3,4,5].map(n=>'<button class="'+(it.rate==n?'on':'')+'" aria-label="'+FL[n-1]+'" onclick="rate('+it.id+','+n+')">'+FACE(n)+'</button>').join('')+'</div>';
+function rate(id,n){const i=S.plan.find(x=>x.id==id);i.rate=n;save();r()}
+function fig2(t){const P=(d,o)=>'<path d="'+d+'"'+(o?' opacity=".45"':'')+'/>',
+ A=(a,b,o,s)=>'<path d="'+a+'"'+(o?' opacity=".45"':'')+'><animate attributeName="d" values="'+a+';'+b+';'+a+'" dur="'+(s||2)+'s" repeatCount="indefinite"/></path>',
+ C=(x,y)=>'<circle cx="'+x+'" cy="'+y+'" r="5.5"/>',
+ W=a=>'<svg viewBox="0 0 100 70" width="96" height="67" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">'+a+'<path d="M4 65H96" opacity=".3"/></svg>',
+ G=(a,f,v)=>'<g><animateTransform attributeName="transform" type="'+f+'" values="'+v+'" dur="2s" repeatCount="indefinite"/>'+a+'</g>';
+ if(/bridge/i.test(t))return W(C(9,52)+A('M16 59L36 59L54 44L58 59','M16 59L36 47L54 44L58 59')+A('M36 59L58 44L62 59','M36 47L58 44L62 59',1)+P('M16 59L34 61')+P('M16 59L32 57',1));
+ if(/dead bug/i.test(t))return W(C(10,54)+P('M16 59L44 59')+P('M42 59L42 44L58 44')+A('M45 59L45 46L61 46','M45 59L57 59L71 59',1)+A('M18 58L18 40','M18 58L2 58')+P('M21 58L21 40',1));
+ if(/clamshell/i.test(t))return W(C(12,46)+P('M17 50L44 56')+P('M44 56L64 54L48 62',1)+A('M44 56L64 54L48 62','M44 54L66 42L50 60')+P('M19 50L30 42L42 50')+P('M17 50L8 56',1));
+ if(/plank/i.test(t))return W(G(C(12,38)+P('M20 44L72 62')+P('M22 45L76 62',1)+P('M20 44L20 62L34 62')+P('M24 45L24 62L38 62',1),'translate','0 0;0 -1.5;0 0'));
+ if(/romanian|deadlift/i.test(t))return W('<circle r="5.5"><animate attributeName="cx" values="50;78;50" dur="2.4s" repeatCount="indefinite"/><animate attributeName="cy" values="10;30;10" dur="2.4s" repeatCount="indefinite"/></circle>'+A('M50 36L50 18','M50 36L72 34',0,2.4)+P('M50 36L50 62')+A('M50 36L53 60','M50 36L22 34',1,2.4)+A('M50 20L50 36','M72 34L72 52',0,2.4)+A('M52 20L52 36','M75 34L75 52',1,2.4));
+ if(/kuit|tibialis/i.test(t))return W(G(C(50,12)+P('M50 18L50 40')+P('M50 40L45 62')+P('M50 40L55 62')+P('M50 22L40 32L40 42')+P('M50 22L60 32L60 42')+P('M41 62H48M52 62H59'),'translate','0 0;0 -5;0 0'));
+ return W(G(C(50,12)+P('M50 18L50 40')+P('M50 40L50 62')+P('M50 40L63 48L63 60')+P('M50 22L34 28')+P('M50 22L66 28'),'rotate','-4 50 62;4 50 62;-4 50 62'));}
+const fm=s=>{s=Math.round(s);return Math.floor(s/60)+':'+pad(s%60)};
+function tsec(s){if(!s)return 0;const a=String(s).trim().split(':').map(Number);if(a.some(isNaN))return 0;return a.length==3?a[0]*3600+a[1]*60+a[2]:a.length==2?a[0]*60+a[1]:0}
+function paceIt(pl,p){const T=[[5,p.t5],[10,p.t10],[21.1,p.t21]].map(x=>[x[0],tsec(x[1])]).filter(x=>x[1]>0);if(!T.length)return pl;const b=T.reduce((s,x)=>s+x[1]*Math.pow(10/x[0],1.06),0)/T.length/10,ag=p.age>=40?1.02:1,f=(a,c)=>fm(b*a)+' – '+fm(b*c)+' /km',e=f(1.22*ag,1.32*ag),L=f(1.28*ag,1.4*ag),q=f(1.03,1.08);pl.forEach(i=>{if(i.type=='long')i.pace=L;else if(i.type=='int'){i.pace=q;i.pe=e}else if(i.type=='run')i.pace=e});return pl}
+function feas(p){const g=GOALS[p.goal];let r=p.age>=50?.07:p.age>=40?.08:.10;if(p.weight>=95)r=Math.min(r,.07);r=Math.max(.05,r-.01);const n=Math.ceil(Math.log(Math.max(1,g.peak/Math.max(p.weekly,8)))/Math.log(1+r)*1.35)+2;return p.weeks<n?'Voor '+g.n+' is ongeveer '+n+' weken opbouw verstandig vanaf '+p.weekly+' km per week. Met '+p.weeks+' weken bouwt het schema veilig op, maar je bereikt niet de volledige piek van '+g.peak+' km per week.':''}
+function applyActs(acts){let n=0;acts.forEach(a=>{const i=S.plan.find(x=>x.date==a.d&&!x.done&&['run','int','long'].includes(x.type));if(i){i.done=true;i.actual=Math.round(a.k*10)/10;n++}});
+ const w0=add(today,-7),pl=S.plan.filter(x=>x.date>=w0&&x.date<today&&['run','int','long'].includes(x.type)),key=monday(today);let msg='';
+ if(pl.length&&S.adj!=key){const pk=pl.reduce((s,x)=>s+x.km,0),ak=pl.filter(x=>x.done).reduce((s,x)=>s+(x.actual||x.km),0),ra=pk?ak/pk:1;let f=1;if(ra<.7)f=.9;else if(ra>1.2)f=.95;const lr=pl.filter(x=>x.rate).slice(-2);if(lr.length==2&&lr.every(x=>x.rate<=2))f*=.9;if(f<1){S.plan.filter(x=>x.date>=today&&!x.done&&x.km).forEach(x=>x.km=r5(x.km*f));msg='Schema '+Math.round((1-f)*100)+'% lichter gemaakt (vorige week '+Math.round(ra*100)+'% van het plan gelopen).'}S.adj=key}
+ S.msg=(n?n+' training(en) automatisch afgevinkt. ':'')+msg;save();return n}
+function svAuth(){window.open('https://www.strava.com/oauth/authorize?client_id='+encodeURIComponent($('#sid').value.trim())+'&response_type=code&redirect_uri=http://localhost&approval_prompt=force&scope=activity:read_all')}
+async function sv(a){const s=S.sv||(S.sv={}),say=t=>{S.svm=t;save();const m=$('#svm');if(m)m.textContent=t},post=b=>fetch('https://www.strava.com/oauth/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(x=>x.json());
+ try{if(a=='x'){s.id=$('#sid').value.trim();s.sec=$('#ssc').value.trim();const code=$('#scd').value.trim().replace(/.*code=([^&]+).*/,'$1'),j=await post({client_id:s.id,client_secret:s.sec,code,grant_type:'authorization_code'});if(!j.refresh_token)throw 0;s.rt=j.refresh_token;say('Verbonden met Strava. Tik op Nu synchroniseren.')}
+ if(a=='s'){const j=await post({client_id:s.id,client_secret:s.sec,refresh_token:s.rt,grant_type:'refresh_token'});if(!j.access_token)throw 0;s.rt=j.refresh_token||s.rt;const L=await(await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=60&after='+Math.floor(Date.now()/1000-35*864e5),{headers:{Authorization:'Bearer '+j.access_token}})).json(),acts=L.filter(x=>/run/i.test(x.type)).map(x=>({d:x.start_date_local.slice(0,10),k:x.distance/1000}));if(S.plan.length)applyActs(acts);say(acts.length+' loopjes opgehaald. '+(S.msg||''))}}
+ catch(e){say('Verbinden mislukt. Dit werkt enkel in de geïnstalleerde versie met internet. Controleer ID, secret en code.')}}
+let ask=null;
+/* Uitbreidbaar: voeg een doel toe in GOALS of een oefenreeks in EX */
+const EX={A:['Excentrische kuitheffen, rechte knie: 3×15 (3 sec zakken)','Excentrische kuitheffen, gebogen knie: 3×15','Glute bridge: 3×12','Zijwaartse plank: 3×30 sec per kant','Balans op één been: 3×30 sec'],
+B:['Lage step-ups: 3×10 per been','Romanian deadlift op één been (zonder gewicht): 3×10','Dead bug: 3×10','Clamshells met band: 3×15','Tibialis-heffen (tenen omhoog): 3×15']};
+const TEASE=['Je schoenen staan al te kijken. Ze beginnen aan je te twijfelen. 👟','Die zetel is comfortabel, hé? Dat is precies wat hij wil dat je denkt. 😏','Een kilometer is maar een kilometer. Jij bent dramatischer dan de afstand.','Je achillespees heeft gezegd dat hij klaar is. Jij ook?','Mijn algoritme werkt harder dan jij vandaag. Gênant eigenlijk. 🤖','Gewoon beginnen. Over 5 minuten ben je vanzelf blij dat je gegaan bent.','Ik ga het niet zeggen, maar de weegschaal en je schema praten over je.','Slechte excuses van vandaag: het is te koud, te warm, te nat. Ik heb ze allemaal gehoord. 🙄','Als je nu gaat, mag je straks zonder schuldgevoel op die zetel. Deal?','Je schema voelt zich genegeerd. Hij heeft het al aan zijn vrienden verteld.','Stiekem ben je goed bezig. Laat het niet aan mij liggen dat ik je moet complimenteren.','Jouw toekomstige zelf stuurt een berichtje: gaan lopen, schatje. 💌'];
+const MISS=['Oei, een gemiste training. Ik zeg niks. Ik schuif gewoon (en kijk een beetje streng).','Het schema wacht nog. Het is geduldig, maar niet eeuwig. 😤'];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+
+function sleepF(){const k=Object.keys(S.sleep).sort().slice(-3);if(!k.length)return{f:1,a:null};const a=k.reduce((s,x)=>s+S.sleep[x],0)/k.length;return{f:a<6?.7:a<7?.85:1,a}}
+function eff(it){const sl=sleepF();const adj=sl.f<1&&!it.done&&['run','int','long'].includes(it.type)&&it.date>=today&&it.date<=add(today,2);
+ return adj?{...it,km:r5(it.km*sl.f),type:it.type=='int'?'run':it.type,pace:it.type=='int'?it.pe:it.pace,adj:1,desc:it.type=='int'?'Slecht geslapen: intervallen vervangen door een rustige duurloop (RPE 3-4).':it.desc}:it}
+
+function gen(p){
+ const g=GOALS[p.goal],n=RUND[p.days].length,rd=RUND[p.days];
+ let r=p.age>=50?.07:p.age>=40?.08:.10;if(p.weight>=95)r=Math.min(r,.07);r=Math.max(.05,r-.01);
+ const kd=[0,1,2,3,4,5,6].filter(x=>!rd.includes(x)).slice(0,2),mon=monday(p.start||today),plan=[];
+ let build=Math.max(p.weekly,8),id=0;
+ for(let w=0;w<p.weeks;w++){
+  const last=w==p.weeks-1,dl=w%(p.age>=50?3:4)==(p.age>=50?2:3)&&!last;let wk;
+  if(last)wk=build*.6;else if(dl)wk=build*.75;else{build=Math.min(g.peak,build*(1+r));wk=build}
+  let lr=Math.min(g.long,Math.max(3,p.long)+w*.7,wk*.4);if(dl)lr*=.8;if(last)lr*=.7;
+  const er=(wk-lr)/(n-1),reps=Math.min(4+Math.floor((w-2)/2),8);
+  const wr=p.weight>=95?' Wissel eventueel 8 min joggen en 1 min wandelen.':'';
+  for(let day=0;day<7;day++){
+   const date=add(mon,w*7+day);if(date<(p.start||today))continue;
+   const ri=rd.indexOf(day),b={id:id++,date,done:false,skipped:false};
+   if(ri==n-1)plan.push({...b,type:'long',km:r5(lr),title:'Lange rustige duurloop',desc:'Heel rustig tempo (RPE 3). Vlak en zacht terrein. Stop bij pijn aan de achillespees.'+wr});
+   else if(ri==1&&n>=3&&w>=2&&!dl&&!last)plan.push({...b,type:'int',km:r5(er),title:'Zachte intervallen',desc:'Warm-up 10 min rustig. '+reps+'× 1 min vlot (RPE 6/10, géén sprint) met 2 min wandelen of joggen ertussen. Cooldown 10 min. Vlak, niet bergop.'});
+   else if(ri>=0)plan.push({...b,type:'run',km:r5(er),title:'Rustige duurloop',desc:'Je kan nog een gesprek voeren (RPE 3-4).'+(ri==1&&w>=1&&!dl&&!last?' Eindig met 4 versnellingen van 20 sec (RPE 5, geen sprint).':'')+wr});
+   else if(kd.includes(day)){const k=kd.indexOf(day)?'B':'A';plan.push({...b,type:'str',km:0,title:'Kracht en achilles ('+k+')',desc:'ex:'+k})}
+   else plan.push({...b,type:'rest',km:0,title:'Rustdag',desc:'Wandelen of rustig fietsen mag. Laat kuiten en achillespezen herstellen.'});
+  }}
+ return plan}
+
+function shift(from,n){S.plan.forEach(i=>{if(!i.done&&i.date>=from)i.date=add(i.date,n)});save()}
+function mark(id,v){const i=S.plan.find(x=>x.id==id);i.done=v;save();r()}
+function moveOne(id){ask=id;r()}
+function doShift(all){const i=S.plan.find(x=>x.id==ask);if(all)shift(i.date,1);else{const t=add(i.date,1),rs=S.plan.find(x=>x.date==t&&x.type=='rest');if(rs)rs.date=i.date;i.date=t}ask=null;save();r()}
+function sheet(){return ask==null?'':'<div class="sheet" onclick="ask=null;r()"><div onclick="event.stopPropagation()"><h3>Hoe wil je opschuiven?</h3><div class="mu">Kies wat er met je schema gebeurt.</div><button class="b" onclick="doShift(1)">Alles +1 dag meeschuiven</button><button class="b g" onclick="doShift(0)">Alleen deze training +1 dag</button><button class="b g" onclick="ask=null;r()">Annuleren</button></div></div>'}
+function cancelPlan(){if(confirm('Je volledige trainingsschema annuleren? Je profiel blijft bewaard.')){S.plan=[];save();tab='v';r()}}
+function theme(c){S.bg=c;save();ap();r()}
+function ap(){const R=document.documentElement,c=S.bg;if(!c){R.removeAttribute('data-theme');R.removeAttribute('data-dk');R.style.removeProperty('--bg');return}const n=parseInt(c.slice(1),16),l=(.299*(n>>16)+.587*((n>>8)&255)+.114*(n&255))/255;R.dataset.theme=l<.5?'dark':'light';if(l<.5)R.setAttribute('data-dk','');else R.removeAttribute('data-dk');R.style.setProperty('--bg',c)}
+function skipOne(id){const i=S.plan.find(x=>x.id==id);i.skipped=true;save();r()}
+function catchUp(){const o=S.plan.filter(i=>i.date<today&&!i.done&&!i.skipped&&i.type!='rest').sort((a,b)=>a.date<b.date?-1:1)[0];if(o){shift(o.date,diff(today,o.date))}r()}
+
+let tab='v',cm=today.slice(0,7),sel=today;
+function card(it0,btn){const it=eff(it0);
+ const ex=it.desc.startsWith('ex:')?'<ul class="ex">'+EX[it.desc[3]].map(x=>'<li>'+fig2(x)+'<span>'+x+'</span></li>').join('')+'</ul><div class="mu">Pijn boven 3/10 of ochtendstijfheid die erger wordt? Overleg met een kinesist.</div>':'<div>'+it.desc+'</div>';
+ return '<div class="c t-'+it.type+'"><h3>'+ICON[it.type]+' '+it.title+(it.km?' · '+it.km+' km':'')+(it.adj?'<span class="tag">😴 aangepast</span>':'')+(it.done?'<span class="tag">gedaan</span>':'')+(it.skipped?'<span class="tag">overgeslagen</span>':'')+'</h3><div class="mu">'+DAGEN[(D(it.date).getDay()+6)%7]+' '+it.date.slice(8)+'/'+it.date.slice(5,7)+'</div>'+ex+
+ '<div><button class="b g" onclick="det='+it.id+';r()">Uitgebreide uitleg</button></div>'+(it.pace?'<div class="mu" style="margin-top:6px">Tempo: <b>'+it.pace+'</b></div>':'')+(it.done?RT(it):'')+(btn&&!it.done&&!it.skipped&&it.type!='rest'?'<button class="b" onclick="mark('+it.id+',true)">Gedaan</button><button class="b g" onclick="moveOne('+it.id+')">Schuif op (+1 dag)</button><button class="b g" onclick="skipOne('+it.id+')">Overslaan</button>':'')+'</div>'}
+
+function vTab(){
+ if(!S.p)return pTab();
+ if(!S.plan.length)return '<div class="hero"><h2 style="margin:0">BAFFE</h2></div><div class="c"><h3>Geen actief schema</h3><div class="mu">Maak een nieuw schema met een startdatum naar keuze.</div><button class="b" onclick="tab=\'p\';r()">Nieuw schema maken</button></div>';
+ const items=S.plan.filter(i=>i.type!='rest'),dn=items.filter(i=>i.done).length;
+ const over=S.plan.some(i=>i.date<today&&!i.done&&!i.skipped&&i.type!='rest');
+ const hi=S.inbox.slice(-1)[0];
+ let h='<div class="hero">'+(S.photo?'<img class="av" src="'+S.photo+'" alt="">':'<div class="av">🙂</div>')+'<div><div class="mu">BAFFE · '+new Date().toLocaleDateString('nl-BE',{weekday:'long',day:'numeric',month:'long'})+'</div><h2 style="margin:0">Hoi '+esc(S.p.name||'loper')+' 👋</h2></div></div>';
+ if(over)h+='<div class="tease">'+pick(MISS)+'<br><button class="b g" style="color:#fff;border-color:#fff" onclick="catchUp()">Schuif schema naar vandaag</button></div>';
+ else if(hi)h+='<div class="tease">'+esc(hi.t)+'</div>';
+ if(S.warn)h+='<div class="c mu">'+S.warn+'</div>';if(S.msg)h+='<div class="c mu">'+esc(S.msg)+'</div>';if(S.p.goalText)h+='<div class="c"><div class="mu">Mijn doel</div><b>'+esc(S.p.goalText)+'</b></div>';h+='<div class="c"><div class="stat"><div class="big">'+Math.round(items.length?dn/items.length*100:0)+'%</div><div class="mu">Voortgang<br>'+dn+' van '+items.length+' trainingen</div></div><div class="bar"><i style="width:'+(items.length?dn/items.length*100:0)+'%"></i></div>';
+ const sl=sleepF();h+='<div class="mu" style="margin-top:6px">Slaap (3 nachten): '+(sl.a?sl.a.toFixed(1)+' u'+(sl.f<1?' → komende trainingen zijn lichter':' → alles ok'):'nog niets ingevoerd')+'</div></div>';
+ const td=S.plan.filter(i=>i.date==today);
+ h+='<h2>Vandaag</h2>'+(td.length?td.map(i=>card(i,1)).join(''):'<div class="c mu">Niets gepland vandaag.</div>');
+ h+='<h2>Hierna</h2>'+S.plan.filter(i=>i.date>today&&i.type!='rest').slice(0,3).map(i=>card(i,0)).join('');
+ h+='<button class="b g" onclick="poke()">Geef me een por 👉</button>';
+ return h}
+function poke(){S.inbox.push({d:today,t:pick(TEASE)});save();r()}
+
+function kTab(){
+ const [y,m]=cm.split('-').map(Number),off=(new Date(y,m-1,1).getDay()+6)%7,dim=new Date(y,m,0).getDate();
+ let h='<div class="ch"><button class="b g" onclick="mv(-1)">'+I.l+'</button><h2>'+['januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december'][m-1]+' '+y+'</h2><button class="b g" onclick="mv(1)">'+I.r+'</button></div><div class="c"><div class="grid">'+DAGEN.map(x=>'<div class="mu">'+x+'</div>').join('');
+ for(let i=0;i<off;i++)h+='<div></div>';
+ for(let d=1;d<=dim;d++){const ds=cm+'-'+pad(d),its=S.plan.filter(i=>i.date==ds);
+  h+='<div class="d'+(ds==today?' t':'')+(ds==sel?' s':'')+(its.length&&its.every(i=>i.done)?' dn':'')+'" onclick="sel=\''+ds+'\';r()">'+d+'<div class="dots">'+its.map(i=>'<i class="dt '+i.type+(i.done?' ok':'')+'"></i>').join('')+'</div></div>'}
+ h+='</div></div><h2 style="margin-top:14px">'+sel.slice(8)+'/'+sel.slice(5,7)+'</h2>';
+ const its=S.plan.filter(i=>i.date==sel);
+ return h+(its.length?its.map(i=>card(i,1)).join(''):'<div class="c mu">Niets gepland.</div>')}
+function mv(n){let[y,m]=cm.split('-').map(Number);m+=n;if(m<1){m=12;y--}if(m>12){m=1;y++}cm=y+'-'+pad(m);r()}
+
+function sTab(){
+ const k=Object.keys(S.sleep).sort().slice(-7).reverse();
+ return '<h2>😴 Slaap</h2><div class="c"><label>Nacht van (datum)</label><input type="date" id="sd" value="'+today+'"><label>Uren geslapen (kijk in je Coros-app)</label><input type="number" id="sh" step="0.25" min="0" max="14" placeholder="bv. 7.5"><button class="b" onclick="addS()">Opslaan</button><div class="mu" style="margin-top:8px">Minder dan 7 u gemiddeld: komende trainingen −15%. Minder dan 6 u: −30% en geen intervallen.</div></div>'+
+ '<div class="c"><h3>Laatste nachten</h3>'+(k.length?k.map(x=>'<div>'+x+': <b>'+S.sleep[x]+' u</b></div>').join(''):'<span class="mu">Nog niets.</span>')+'</div>'}
+function addS(){const v=parseFloat($('#sh').value);if(!(v>0))return;S.sleep[$('#sd').value||today]=v;save();r()}
+
+function pTab(){const p=S.p||{name:'',age:35,weight:75,weekly:15,long:6,goal:'10k',weeks:12,days:4};
+ return '<h2>⚙️ Profiel en schema</h2><div class="c" style="display:flex;gap:12px;align-items:center">'+(S.photo?'<img class="av" src="'+S.photo+'" alt="">':'<div class="av">🙂</div>')+'<div><label>Profielfoto</label><input type="file" accept="image/*" onchange="photo(this)"></div></div>'+
+ '<div class="c"><div class="g2"><div><label>Naam</label><input id="pn" value="'+esc(p.name)+'"></div><div><label>Leeftijd</label><input id="pa" type="number" value="'+p.age+'"></div><div><label>Gewicht (kg)</label><input id="pw" type="number" value="'+p.weight+'"></div><div><label>Km per week nu</label><input id="pk" type="number" value="'+p.weekly+'"></div><div><label>Langste loop (km)</label><input id="pl" type="number" value="'+p.long+'"></div><div><label>Looptrainingen/week</label><select id="pd">'+[3,4,5].map(x=>'<option'+(x==p.days?' selected':'')+'>'+x+'</option>').join('')+'</select></div></div><label>Doel</label><select id="pg">'+Object.keys(GOALS).map(x=>'<option value="'+x+'"'+(x==p.goal?' selected':'')+'>'+GOALS[x].n+'</option>').join('')+'</select><label>Eigen omschrijving van je doel</label><input id="pt" placeholder="bv. Ultra in juni, 100 km" value="'+esc(p.goalText||'')+'"><div class="g2"><div><label>Tijd 5 km</label><input id="t5" placeholder="mm:ss" value="'+esc(p.t5||'')+'"></div><div><label>Tijd 10 km</label><input id="t10" placeholder="mm:ss" value="'+esc(p.t10||'')+'"></div><div><label>Tijd 21 km</label><input id="t21" placeholder="u:mm:ss" value="'+esc(p.t21||'')+'"></div></div><label>Aantal weken</label><input id="pe" type="number" min="4" max="40" value="'+p.weeks+'"><label>Startdatum</label><input id="ps" type="date" value="'+(p.start||today)+'">'+
+ '<button class="b" onclick="mk()">Genereer schema</button><div class="mu" style="margin-top:6px">Opbouw max. 5–10% per week, om de 4 weken een rustweek, intervallen alleen zacht, met extra voorzichtigheid voor je achillespezen. Leeftijd en gewicht verlagen de opbouwsnelheid.</div></div>'+
+ '<div class="c"><h3>Loopgegevens uit Coros</h3><div class="mu">Een rechtstreekse koppeling met Coros, Strava of Garmin kan hier niet. Exporteer je activiteiten en laad ze in: <b>Strava</b> (Instellingen → Mijn account → Download je gegevens: activities.csv), <b>Garmin Connect</b> (activiteitenlijst als CSV), <b>Coros</b> of andere apps (GPX- of TCX-bestanden, ook meerdere tegelijk). Ik bereken je km per week en langste loop uit de laatste 4 weken.</div><input type="file" multiple accept=".csv,.gpx,.tcx,text/csv" onchange="imp(this)"><div id="cr" class="mu"></div></div>'+
+ '<div class="c"><h3>🌦️ Weerbericht</h3><a href="https://www.buienradar.be" target="_blank" rel="noopener">Buienradar</a> · <a href="https://www.meteo.be" target="_blank" rel="noopener">KMI</a> · <a href="https://www.windy.com" target="_blank" rel="noopener">Windy</a></div>'+
+ '<div class="c"><h3>Strava koppelen (automatisch bijsturen)</h3><div class="mu">1) Zet in de Coros-app Strava aan als gekoppelde app: je Coros-loopjes komen dan vanzelf in Strava. 2) Maak op strava.com/settings/api een API-app met callback-domein localhost. 3) Vul ID en secret in, tik op Toestemming, keur goed en plak de volledige adresbalk van de pagina die niet laadt hieronder. 4) Tik op Verbinden. Werkt enkel in de geïnstalleerde versie met internet. Je secret blijft op dit toestel.</div><input id="sid" placeholder="Client ID" value="'+esc((S.sv&&S.sv.id)||'')+'"><input id="ssc" type="password" placeholder="Client secret" value="'+esc((S.sv&&S.sv.sec)||'')+'"><input id="scd" placeholder="Geplakt adres of code"><button class="b g" onclick="svAuth()">Toestemming</button><button class="b" onclick="sv(\'x\')">Verbinden</button><button class="b g" onclick="sv(\'s\')">Nu synchroniseren</button><div id="svm" class="mu" style="margin-top:8px">'+esc(S.svm||'')+(S.sv&&S.sv.rt?' Verbonden.':'')+'</div></div>'+'<div class="c"><h3>Achtergrondkleur</h3><div class="sw">'+['#f4f5fa','#fdeff3','#e8f7f1','#e8f1fd','#f7f1e6','#0e1020'].map(c=>'<button style="background:'+c+'" onclick="theme(\''+c+'\')"></button>').join('')+'<input type="color" value="'+(S.bg||'#f4f5fa')+'" onchange="theme(this.value)"></div><button class="b g" onclick="theme(\'\')">Standaard</button></div>'+'<div class="c"><button class="b g" onclick="cancelPlan()">Training annuleren</button> <button class="b g" onclick="if(confirm(\'Alles wissen?\')){S={p:null,plan:[],sleep:{},photo:\'\',inbox:[],last:\'\'};save();r()}">Alle gegevens wissen</button></div>'}
+TEASE.length=0;TEASE.push(
+'Je zetel heeft een relatie met je. Het is een toxische. Ga lopen. 🛋️',
+'Breaking news: je loopschoenen zijn gespot aan de deur, zonder voeten. Ze maken zich zorgen.',
+'Ik sprak je achillespees. Hij zei: ik ben klaar voor vandaag. Zijn jullie dat ook? 🦶',
+'Elke kilometer die je niet loopt, wordt rente op je zetelschuld.',
+'Je Strava is zo leeg dat zelfs het algoritme medelijden heeft. 📉',
+'Je enige sprint van vandaag ging naar de koelkast. Respect, maar het telt niet.',
+'Te nat? Je bent geen suikerklontje. Of toch? 🍪',
+'Je toekomstige zelf belde. Hij vraagt vriendelijk of je dat loopje wil doen. Hij klonk nogal moe.',
+'Even eerlijk: morgen is geen trainingsdag. Ik heb gekeken.',
+'Ik maakte het schema. Jij levert enkel de benen. Eerlijke verdeling, vind ik. 🤖',
+'Je schoenen staan al 20 minuten aan de deur te kijken als een hond zonder wandeling. 🐶',
+'Goed nieuws: het is een rustige loop. Slecht nieuws: je excuses zijn dat ook.',
+'De eerste 5 minuten zijn lastig. Daarna ben je gewoon moe en trots. Deal?',
+'Je zetel zegt dat hij je zal missen. Hij liegt. Hij heeft al iemand anders.',
+'Van naar je schema kijken ben je nog nooit sneller geworden. Wetenschap.',
+'Je kuiten hebben een klacht ingediend bij HR: te weinig werk.',
+'Je horloge vraagt of het mag stoppen met wachten. Het is er emotioneel van.',
+'Spoiler: je zal blij zijn dat je gegaan bent. Ik heb het einde gelezen. 📖');
+MISS.length=0;MISS.push(
+'Gemiste training! Ik word niet boos, ik zucht enkel teleurgesteld. *zucht* Ik schuif het wel op.',
+'Je schema zit al in de wachtkamer, met een tijdschrift uit 2019. Tijd om het te verschuiven.',
+'Een training minder? Je zetel feliciteert je. Ik niet. 😤',
+'Ik heb je schema een dag opgeschoven. Het ziet er nog steeds beledigd uit.');
+const fT=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),c=s%60;return h?h+':'+pad(m)+':'+pad(c):m+':'+pad(c)};
+const PD={name:'',age:35,weight:75,weekly:15,long:6,goal:'10k',weeks:12,days:4,goalText:'',t5:'',t10:'',t21:'',start:today};
+let ptab='g',det=null;
+function sp(){const o=Object.assign({},PD,S.p||{}),v=id=>{const e=$('#'+id);return e?e.value:null},m={pn:['name',0],pa:['age',1],pw:['weight',1],pk:['weekly',1],pl:['long',1],t5:['t5',0],t10:['t10',0],t21:['t21',0],pg:['goal',0],pt:['goalText',0],pe:['weeks',1],pd:['days',1],ps:['start',0]};
+ for(const k in m){const x=v(k);if(x!==null){const f=m[k][0];o[f]=m[k][1]?(+x||o[f]):x}}
+ o.weeks=Math.min(40,Math.max(4,o.weeks));o.start=o.start||today;S.p=o;save()}
+function zones(p){const T=[[5,p.t5],[10,p.t10],[21.1,p.t21]].map(x=>[x[0],tsec(x[1])]).filter(x=>x[1]>0),hm=Math.round(208-.7*(p.age||35)),hr=(a,c)=>Math.round(hm*a)+'–'+Math.round(hm*c)+' bpm',
+ b=T.length?T.reduce((s,x)=>s+x[1]*Math.pow(10/x[0],1.06),0)/T.length/10:0,ag=p.age>=40?1.02:1,f=(a,c)=>b?fm(b*a)+' – '+fm(b*c)+' /km':'vul een racetijd in';
+ return{hm,b,rows:[['Z1','Herstel',f(1.4,1.55),hr(.5,.6),'#8b95b0'],['Z2','Rustig en duurloop',f(1.22*ag,1.32*ag),hr(.6,.7),'#12b76a'],['Z3','Stevig',f(1.1,1.18),hr(.7,.8),'#1d9bf0'],['Z4','Zachte intervallen (maximum)',f(1.03,1.08),hr(.8,.88),'#ff9f1c'],['Z5','Snel: vermijden (achilles)',b?'sneller dan '+fm(b*1.03)+' /km':'–',hr(.88,1),'#ff2d6f']]}}
+async function stravaTok(){const s=S.sv||{},j=await fetch('https://www.strava.com/oauth/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:s.id,client_secret:s.sec,refresh_token:s.rt,grant_type:'refresh_token'})}).then(x=>x.json());if(!j.access_token)throw 0;s.rt=j.refresh_token||s.rt;return j.access_token}
+async function svStats(){sp();const say=t=>{S.svm=t;save();document.querySelectorAll('#svm2,#svm').forEach(m=>m.textContent=t)};
+ if(!(S.sv&&S.sv.rt)){say('Koppel eerst Strava (kaart hieronder).');return}
+ try{say('Bezig met ophalen…');const tk=await stravaTok(),L=await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=200&after='+Math.floor(Date.now()/1000-365*864e5),{headers:{Authorization:'Bearer '+tk}}).then(x=>x.json()),R=L.filter(x=>/run/i.test(x.type)&&x.distance>0),from=add(today,-28),rec=R.filter(x=>x.start_date_local.slice(0,10)>=from),
+ best=(a,b,t)=>{let m=0;R.forEach(x=>{if(x.distance>=a&&x.distance<=b&&x.moving_time>0){const e=x.moving_time*t/x.distance;if(!m||e<m)m=e}});return m?fT(m):''},p=S.p;
+  if(rec.length){p.weekly=Math.round(rec.reduce((s,x)=>s+x.distance,0)/4000);p.long=Math.round(Math.max(...rec.map(x=>x.distance))/1000)}
+  const t5=best(5000,5600,5000),t10=best(10000,11000,10000),t21=best(21097,22500,21097);if(t5)p.t5=t5;if(t10)p.t10=t10;if(t21)p.t21=t21;
+  if(S.plan.length)applyActs(R.map(x=>({d:x.start_date_local.slice(0,10),k:x.distance/1000})));
+  say('Gesynchroniseerd: '+rec.length+' loopjes in de laatste 4 weken. Tijden zijn een schatting uit je snelste loopjes; pas ze gerust aan.');save();r()}
+ catch(e){say('Synchroniseren mislukt. Dit werkt enkel in de geïnstalleerde versie met internet, nadat Strava gekoppeld is.')}}
+function mk2(){sp();const p=S.p;S.plan=paceIt(gen(p),p);S.warn=feas(p);S.adj='';save();tab='v';r()}
+function resetAll(){S={p:null,plan:[],sleep:{},photo:'',inbox:[],last:''};save();$('#v').innerHTML='';ap();ptab='g';r()}
+function pTab(){sp();const p=S.p,F=(id,l,v,x)=>`<label>${l}</label><input id="${id}" value="${esc(v)}" ${x||''}>`,
+ sg=[['g','Mijn gegevens'],['s','Mijn statistieken'],['t','Mijn training']].map(x=>`<button class="${ptab==x[0]?'on':''}" onclick="sp();ptab='${x[0]}';r()">${x[1]}</button>`).join('');
+ let h=`<h2>Profiel</h2><div class="seg">${sg}</div>`;
+ if(ptab=='g')h+=`<div class="mu" style="margin-bottom:10px">Wie ben je? Leeftijd en gewicht bepalen hoe voorzichtig je schema opbouwt en hoe je herstel wordt ingeschat.</div>
+ <div class="c" style="display:flex;gap:14px;align-items:center">${S.photo?`<img class="av" src="${S.photo}" alt="">`:`<div class="av">${I.user}</div>`}<div style="flex:1"><label>Profielfoto</label><input type="file" accept="image/*" onchange="sp();photo(this)"></div></div>
+ <div class="c"><div class="g2"><div>${F('pn','Naam',p.name)}</div><div>${F('pa','Leeftijd',p.age,'type="number"')}</div></div>${F('pw','Gewicht (kg)',p.weight,'type="number"')}</div>
+ <div class="c"><h3>Achtergrondkleur</h3><div class="sw">${['#f4f5fa','#fdeff3','#e8f7f1','#e8f1fd','#f7f1e6','#0e1020'].map(c=>`<button style="background:${c}" onclick="theme('${c}')"></button>`).join('')}<input type="color" value="${S.bg||'#f4f5fa'}" onchange="theme(this.value)"></div><button class="b g" onclick="theme('')">Standaard</button></div>
+ <div class="c"><button class="b g" onclick="if(confirm('Alle gegevens wissen?'))resetAll()">Alle gegevens wissen</button></div>`;
+ if(ptab=='s'){const z=zones(p),pr=z.b?[5,10,21.0975,42.195].map(d=>fT(z.b*10*Math.pow(d/10,1.06))):null;
+  h+=`<div class="mu" style="margin-bottom:10px">Je huidige niveau. Vul het zelf in of haal het op uit Strava. Hieruit worden je tempo en zones berekend.</div>
+ <div class="c"><div class="g2"><div>${F('pk','Km per week',p.weekly,'type="number"')}</div><div>${F('pl','Langste loop (km)',p.long,'type="number"')}</div><div>${F('t5','Tijd 5 km',p.t5,'placeholder="mm:ss"')}</div><div>${F('t10','Tijd 10 km',p.t10,'placeholder="mm:ss"')}</div><div>${F('t21','Tijd 21 km',p.t21,'placeholder="u:mm:ss"')}</div></div>
+ <button class="b" onclick="svStats()">Synchroniseer vanuit Strava</button><button class="b g" onclick="sp();r()">Zones bijwerken</button><div id="svm2" class="mu" style="margin-top:8px">${esc(S.svm||'')}</div></div>
+ <div class="c"><h3>Mijn zones</h3><div style="overflow-x:auto"><table class="zt"><tr><th>Zone</th><th>Soort</th><th>Tempo</th><th>Hartslag</th></tr>${z.rows.map(r=>`<tr><td><i class="dt" style="background:${r[4]}"></i> ${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</table></div>
+ <div class="mu" style="margin-top:8px">Geschatte maximale hartslag ${z.hm} bpm (op basis van je leeftijd).${pr?` Voorspelde tijden: 5 km ${pr[0]} · 10 km ${pr[1]} · halve marathon ${pr[2]} · marathon ${pr[3]}.`:''}</div></div>
+ <div class="c"><h3>Loopgegevens inlezen uit een bestand</h3><div class="mu">Strava (activities.csv), Garmin (CSV) of Coros en andere apps (GPX of TCX, meerdere tegelijk).</div><input type="file" multiple accept=".csv,.gpx,.tcx,text/csv" onchange="imp(this)"><div id="cr" class="mu"></div></div>
+ <div class="c"><h3>Strava koppelen (eenmalig)</h3><div class="mu">1) Zet in de Coros-app Strava aan als gekoppelde app. 2) Maak op strava.com/settings/api een API-app met callback-domein localhost. 3) Vul ID en secret in, tik op Toestemming, keur goed en plak de volledige adresbalk van de pagina die niet laadt hieronder. 4) Tik op Verbinden. Werkt enkel in de geïnstalleerde versie. Je secret blijft op dit toestel.</div><input id="sid" placeholder="Client ID" value="${esc((S.sv&&S.sv.id)||'')}"><input id="ssc" type="password" placeholder="Client secret" value="${esc((S.sv&&S.sv.sec)||'')}"><input id="scd" placeholder="Geplakt adres of code"><button class="b g" onclick="svAuth()">Toestemming</button><button class="b" onclick="sv('x')">Verbinden</button><div id="svm" class="mu" style="margin-top:8px">${esc(S.svm||'')}${S.sv&&S.sv.rt?' Verbonden.':''}</div></div>`}
+ if(ptab=='t'){const n=S.plan.length;
+  h+=`<div class="mu" style="margin-bottom:10px">Je doel en je schema: kies wat je wilt bereiken en wanneer je start.</div>
+ <div class="c"><label>Doel</label><select id="pg">${Object.keys(GOALS).map(x=>`<option value="${x}"${x==p.goal?' selected':''}>${GOALS[x].n}</option>`).join('')}</select>${F('pt','Eigen omschrijving van je doel',p.goalText,'placeholder="bv. Ultra in juni"')}
+ <div class="g2"><div>${F('pe','Aantal weken',p.weeks,'type="number" min="4" max="40"')}</div><div>${F('ps','Startdatum',p.start,'type="date"')}</div></div>
+ <label>Looptrainingen per week</label><select id="pd">${[3,4,5].map(x=>`<option${x==p.days?' selected':''}>${x}</option>`).join('')}</select>
+ <button class="b" onclick="mk2()">Genereer schema</button><div class="mu" style="margin-top:8px">Opbouw maximaal 5 tot 10% per week, om de 3 of 4 weken een rustweek en alleen zachte intervallen, met extra zorg voor je achillespezen.</div></div>
+ <div class="c"><h3>Huidig schema</h3><div class="mu">${n?`${n} dagen gepland van ${S.plan[0].date} tot ${S.plan[n-1].date}, samen ongeveer ${Math.round(S.plan.reduce((s,x)=>s+x.km,0))} km.`:'Nog geen schema.'}</div>${n?'<button class="b g" onclick="cancelPlan()">Training annuleren</button>':''}</div>
+ <div class="c"><h3>Weerbericht</h3><a href="https://www.buienradar.be" target="_blank" rel="noopener">Buienradar</a> · <a href="https://www.meteo.be" target="_blank" rel="noopener">KMI</a> · <a href="https://www.windy.com" target="_blank" rel="noopener">Windy</a></div>`}
+ return h}
+const EXI={A:['Rekt en versterkt de pees onder belasting. Zak traag (3 sec) op de rand van een trede. Omhoog met twee benen, omlaag met één als het lukt.','Dezelfde beweging met gebogen knie, om de diepe kuitspier te trainen.','Activeert billen en hamstrings. Duw door je hielen, houd je heupen op één lijn en knijp bovenaan 1 sec.','Versterkt romp en heupen. Eén rechte lijn van schouder tot enkel, laat je heup niet zakken.','Traint de stabiliteit van enkel en voet. Zacht gebogen knie, blik vooruit.'],
+B:['Bouwt been- en heupkracht op. Gebruik een lage trede en duw met het voorste been.','Traint hamstrings en balans. Rug lang houden, beweeg vanuit de heup, een kleine beweging volstaat.','Leert je romp stabiel houden terwijl armen en benen bewegen. Onderrug blijft tegen de grond.','Versterkt de zijdelingse heupspieren die je knie stabiel houden. Voeten blijven bij elkaar.','Versterkt de spieren aan de voorkant van het onderbeen en ontlast je kuit.']};
+function dsheet(){if(det==null)return'';const o=S.plan.find(x=>x.id==det);if(!o)return'';const it=eff(o),p=S.p||PD,hm=Math.round(208-.7*(p.age||35)),hz=(a,c)=>Math.round(hm*a)+'–'+Math.round(hm*c)+' bpm',L=[],ad=(t,x)=>L.push(`<h3 style="margin-top:14px">${t}</h3><div>${x}</div>`),pc=it.pace?`Richttempo <b>${it.pace}</b>. `:'Vul je racetijden in (Profiel, Mijn statistieken) voor een richttempo. ',AC='Kies vlak en zacht terrein (bosweg, gras, piste). Vermijd heuvels en steile afdalingen. Houd je pas kort en snel (cadans 170 tot 180) en land onder je lichaam. Pijn boven 3 op 10 of stekende pijn? Stop en wandel naar huis. Is je pees de volgende ochtend stijver, neem dan een extra rustdag.';
+ if(it.adj)ad('Aangepast door je slaap','Je sliep de laatste nachten weinig. Daarom is deze training lichter gemaakt. Luister naar je lichaam en doe liever te weinig dan te veel.');
+ if(it.type=='run'){ad('Doel','Je aerobe basis opbouwen: hart, longen en pezen wennen aan belasting. Rustige loopjes zijn de fundering van je hele schema.');
+  ad('Zo pak je het aan','1) Warm-up: 5 min stevig wandelen, dan 5 min heel rustig joggen. 2) Hoofdgedeelte: '+it.km+' km aan een gelijkmatig, rustig tempo. 3) Cooldown: 5 min wandelen en een zachte kuitstretch (30 sec per kant, niet forceren). '+it.desc);
+  ad('Tempo en gevoel',pc+'Gevoel 3 tot 4 op 10: je kan een hele zin uitspreken zonder naar adem te happen. Hartslag ongeveer '+hz(.6,.7)+'. Merk je dat je sneller gaat? Vertraag, rustig is de bedoeling.');
+  ad('Je achillespezen',AC);ad('Eten en drinken','Onder het uur heb je enkel water nodig. Eet binnen 1 tot 2 uur erna iets met eiwit en koolhydraten.')}
+ else if(it.type=='int'){ad('Doel','Een prikkel voor snelheid zonder maximale belasting, zodat je pezen veilig kunnen meegroeien.');
+  ad('Opbouw van de training',it.desc+' Wandel of jog rustig in de pauzes en wacht tot je ademhaling terug rustig is.');
+  ad('Hoe hard?',pc+'Vlot is 6 op 10: je ademhaling is hoorbaar, maar je kan nog korte zinnen zeggen. Hartslag '+hz(.8,.88)+'. Nooit sprinten of op de limiet gaan. De laatste herhaling is even snel als de eerste.');
+  ad('Je achillespezen',AC+' Sla een warm-up nooit over bij intervallen.')}
+ else if(it.type=='long'){ad('Doel','Uithouding opbouwen, je lichaam leren vet te verbranden en mentaal sterker worden.');
+  ad('Zo pak je het aan','Loop de eerste 10 minuten extra rustig. Houd het tempo daarna gelijkmatig, de tweede helft mag iets vlotter aanvoelen. Wandelpauzes zijn toegestaan, bijvoorbeeld 1 min wandelen per 10 min. '+it.desc);
+  ad('Tempo en gevoel',pc+'Gevoel 3 op 10, hartslag ongeveer '+hz(.6,.7)+'. Dit moet makkelijk aanvoelen.');
+  ad('Eten en drinken','Vanaf 75 minuten loop je met 30 tot 60 g koolhydraten per uur (gel, banaan, sportdrank) en 400 tot 600 ml vocht per uur, meer bij warm weer. Test alles in training, nooit voor het eerst op wedstrijddag.');
+  ad('Je achillespezen',AC+' Kies een route met lussen dicht bij huis, zodat je kan afkorten.')}
+ else if(it.type=='str'){const k=it.desc.slice(3)||'A';ad('Doel','Sterke kuiten, billen en romp ontlasten je achillespezen. Traag, gecontroleerd belasten is de best onderzochte manier om pezen aan lopen te laten wennen.');
+  ad('Zo pak je het aan','Reken op 20 tot 25 minuten. Beweeg traag en gecontroleerd (3 sec zakken). Rust 60 tot 90 sec tussen sets. Start met 2 sets, bouw uit naar 3.');
+  ad('Oefeningen',(EX[k]||[]).map((x,i)=>`<b>${x}</b><br><span class="mu">${EXI[k][i]}</span>`).join('<br><br>'));
+  ad('Pijnregel','Spierbrandend voelen mag. Pijn in de pees boven 3 op 10 niet: verminder het bereik of sla de oefening over.')}
+ else{ad('Doel','Herstel. Je lichaam wordt sterker tijdens de rust, niet tijdens de training.');
+  ad('Wat mag je doen','Een rustige wandeling of fietstocht van 20 tot 30 minuten. Rek lichtjes, vermijd zware inspanning.');
+  ad('Slaap en voeding','Mik op 7 tot 9 uur slaap en eet voldoende eiwit en groenten. Slaap is je beste trainingspartner.')}
+ return `<div class="sheet" onclick="det=null;r()"><div onclick="event.stopPropagation()"><h2 style="margin:0 0 4px">${it.title}${it.km?' · '+it.km+' km':''}</h2><div class="mu">${it.date}</div>${L.join('')}<button class="b" style="margin-top:16px" onclick="det=null;r()">Sluiten</button></div></div>`}
+
+function mk(){const g=x=>$('#'+x).value;S.p={name:g('pn'),age:+g('pa')||35,weight:+g('pw')||75,weekly:+g('pk')||10,long:+g('pl')||5,goal:g('pg'),weeks:Math.min(40,Math.max(4,+g('pe')||12)),days:+g('pd'),start:g('ps')||today,goalText:g('pt'),t5:g('t5'),t10:g('t10'),t21:g('t21')};S.plan=paceIt(gen(S.p),S.p);S.warn=feas(S.p);S.adj='';save();tab='v';r()}
+function photo(el){const f=el.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=160;const s=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-s)/2,(im.height-s)/2,s,s,0,0,160,160);S.photo=c.toDataURL('image/jpeg',.8);save();r()};im.src=fr.result};fr.readAsDataURL(f)}
+function csv(el){const f=el.files[0];if(!f)return;const fr=new FileReader();fr.onload=()=>{
+ const L=fr.result.split(/\r?\n/).filter(Boolean),sp=L[0].includes(';')?';':',',H=L[0].toLowerCase().split(sp);
+ const di=H.findIndex(x=>/date|datum/.test(x)),ki=H.findIndex(x=>/distance|afstand/.test(x));
+ if(di<0||ki<0){$('#cr').textContent='Kolommen datum en afstand niet gevonden.';return}
+ let tot=0,mx=0,from=add(today,-28);
+ L.slice(1).forEach(l=>{const c=l.split(sp),d=new Date(c[di]);if(isNaN(d))return;let k=parseFloat(String(c[ki]).replace(',','.'));if(!(k>0))return;if(k>200)k/=1000;if(iso(d)>=from){tot+=k;mx=Math.max(mx,k)}});
+ $('#pk').value=Math.round(tot/4);$('#pl').value=Math.round(mx);$('#cr').textContent='Gevonden: '+Math.round(tot/4)+' km/week, langste loop '+mx.toFixed(1)+' km (laatste 4 weken).'};fr.readAsText(f)}
+
+function sp2(l,s){const o=[];let c='',q=0;for(const ch of l){if(ch=='"')q=!q;else if(ch==s&&!q){o.push(c);c=''}else c+=ch}o.push(c);return o}
+function hav(a,b,c,d){const R=6371,t=x=>x*Math.PI/180,u=t(c-a),v=t(d-b),h=Math.sin(u/2)**2+Math.cos(t(a))*Math.cos(t(c))*Math.sin(v/2)**2;return 2*R*Math.asin(Math.sqrt(h))}
+function gpx(t){const x=new DOMParser().parseFromString(t,'text/xml'),p=[...x.getElementsByTagName('trkpt')];if(p.length<2)return null;let k=0;for(let i=1;i<p.length;i++)k+=hav(+p[i-1].getAttribute('lat'),+p[i-1].getAttribute('lon'),+p[i].getAttribute('lat'),+p[i].getAttribute('lon'));const tm=x.getElementsByTagName('time')[0];const d=new Date(tm?tm.textContent:NaN);return isNaN(d)?null:{d:iso(d),k}}
+function tcx(t){const x=new DOMParser().parseFromString(t,'text/xml');let m=0;[...x.getElementsByTagName('DistanceMeters')].forEach(e=>{if(e.parentNode.nodeName=='Lap')m+=+e.textContent||0});const id=x.getElementsByTagName('Id')[0],d=new Date(id?id.textContent:NaN);return isNaN(d)||!m?null:{d:iso(d),k:m/1000}}
+function cs(t,acts){const L=t.split(/\r?\n/).filter(Boolean),s=L[0].includes(';')?';':',',H=sp2(L[0],s).map(x=>x.toLowerCase());const di=H.findIndex(x=>/date|datum/.test(x)),ki=H.findIndex(x=>/distance|afstand/.test(x)),ti=H.findIndex(x=>/type|soort/.test(x));if(di<0||ki<0)return;L.slice(1).forEach(l=>{const c=sp2(l,s),d=new Date(c[di]);if(isNaN(d))return;if(ti>=0&&c[ti]&&!/run|loop|hardl/i.test(c[ti]))return;let k=parseFloat(String(c[ki]).replace(',','.'));if(!(k>0))return;if(k>200)k/=1000;acts.push({d:iso(d),k})})}
+function imp(el){const fs=[...el.files];if(!fs.length)return;const acts=[];let n=0;const fin=()=>{if(++n<fs.length)return;const from=add(today,-28),a=acts.filter(x=>x.d>=from);let tot=0,mx=0;a.forEach(x=>{tot+=x.k;mx=Math.max(mx,x.k)});if(S.plan.length&&acts.length)applyActs(acts);if(a.length){$('#pk').value=Math.round(tot/4);$('#pl').value=Math.round(mx)}$('#cr').textContent=a.length?'Gevonden: '+Math.round(tot/4)+' km/week en langste loop '+mx.toFixed(1)+' km ('+a.length+' activiteiten in de laatste 4 weken).':'Geen recente loopgegevens herkend.'};fs.forEach(f=>{const fr=new FileReader(),nm=f.name.toLowerCase();fr.onload=()=>{try{const t=fr.result;if(nm.endsWith('.gpx')){const g=gpx(t);if(g)acts.push(g)}else if(nm.endsWith('.tcx')){const g=tcx(t);if(g)acts.push(g)}else cs(t,acts)}catch(e){}fin()};fr.onerror=fin;fr.readAsText(f)})}
+function r(){
+ if(!S.p)tab='p';
+ $('#v').innerHTML=(tab=='v'?vTab():tab=='k'?kTab():tab=='s'?sTab():pTab())+sheet()+dsheet();
+ $('#nv').innerHTML=[['v','🏠','Vandaag'],['k','📅','Kalender'],['s','😴','Slaap'],['p','⚙️','Profiel']].map(x=>'<button class="'+(tab==x[0]?'on':'')+'" onclick="tab=\''+x[0]+'\';r()">'+NI[x[0]]+x[2]+'</button>').join('')}
+if(S.last!=today){S.last=today;S.inbox.push({d:today,t:pick(TEASE)});S.inbox=S.inbox.slice(-20);save()}ap();setTimeout(()=>{if(S.sv&&S.sv.rt&&S.p)sv('s').then(()=>{if(tab=='v')r()})},800);
+r();
+if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
