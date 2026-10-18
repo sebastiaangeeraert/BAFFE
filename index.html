@@ -132,7 +132,7 @@ function fig2(t){const P=(d,o)=>'<path d="'+d+'"'+(o?' opacity=".45"':'')+'/>',
  return W(G(C(50,12)+P('M50 18L50 40')+P('M50 40L50 62')+P('M50 40L63 48L63 60')+P('M50 22L34 28')+P('M50 22L66 28'),'rotate','-4 50 62;4 50 62;-4 50 62'));}
 const fm=s=>{s=Math.round(s);return Math.floor(s/60)+':'+pad(s%60)};
 function tsec(s){if(!s)return 0;const a=String(s).trim().split(':').map(Number);if(a.some(isNaN))return 0;return a.length==3?a[0]*3600+a[1]*60+a[2]:a.length==2?a[0]*60+a[1]:0}
-function paceIt(pl,p){const T=[[5,p.t5],[10,p.t10],[21.1,p.t21]].map(x=>[x[0],tsec(x[1])]).filter(x=>x[1]>0);if(!T.length)return pl;const b=T.reduce((s,x)=>s+x[1]*Math.pow(10/x[0],1.06),0)/T.length/10,ag=p.age>=40?1.02:1,f=(a,c)=>fm(b*a)+' – '+fm(b*c)+' /km',e=f(1.22*ag,1.32*ag),L=f(1.28*ag,1.4*ag),q=f(1.03,1.08);pl.forEach(i=>{if(i.type=='long')i.pace=L;else if(i.type=='int'){i.pace=q;i.pe=e}else if(i.type=='run')i.pace=e});return pl}
+function paceIt(pl,p){const T=[[5,p.t5],[10,p.t10],[21.1,p.t21]].map(x=>[x[0],tsec(x[1])]).filter(x=>x[1]>0);const cb=+p.cd>0&&tsec(p.ct)>0?tsec(p.ct)/(+p.cd)/1.27:0;if(!T.length&&!cb)return pl;const b=T.length?T.reduce((s,x)=>s+x[1]*Math.pow(10/x[0],1.06),0)/T.length/10:cb,ag=p.age>=40?1.02:1,f=(a,c)=>fm(b*a)+' – '+fm(b*c)+' /km',e=f(1.22*ag,1.32*ag),L=f(1.28*ag,1.4*ag),q=f(1.03,1.08);pl.forEach(i=>{if(i.type=='long')i.pace=L;else if(i.type=='int'){i.pace=q;i.pe=e}else if(i.type=='run')i.pace=e});return pl}
 function feas(p){const g=GOALS[p.goal];let r=p.age>=50?.07:p.age>=40?.08:.10;if(p.weight>=95)r=Math.min(r,.07);r=Math.max(.05,r-.01);const n=Math.ceil(Math.log(Math.max(1,g.peak/Math.max(p.weekly,8)))/Math.log(1+r)*1.35)+2;return p.weeks<n?'Voor '+g.n+' is ongeveer '+n+' weken opbouw verstandig vanaf '+p.weekly+' km per week. Met '+p.weeks+' weken bouwt het schema veilig op, maar je bereikt niet de volledige piek van '+g.peak+' km per week.':''}
 function applyActs(acts){let n=0;acts.forEach(a=>{const i=S.plan.find(x=>x.date==a.d&&!x.done&&['run','int','long'].includes(x.type));if(i){i.done=true;i.actual=Math.round(a.k*10)/10;n++}});
  const w0=add(today,-7),pl=S.plan.filter(x=>x.date>=w0&&x.date<today&&['run','int','long'].includes(x.type)),key=monday(today);let msg='';
@@ -140,9 +140,9 @@ function applyActs(acts){let n=0;acts.forEach(a=>{const i=S.plan.find(x=>x.date=
  S.msg=(n?n+' training(en) automatisch afgevinkt. ':'')+msg;save();return n}
 function svAuth(){window.open('https://www.strava.com/oauth/authorize?client_id='+encodeURIComponent($('#sid').value.trim())+'&response_type=code&redirect_uri=http://localhost&approval_prompt=force&scope=activity:read_all')}
 async function sv(a){const s=S.sv||(S.sv={}),say=t=>{S.svm=t;save();const m=$('#svm');if(m)m.textContent=t},post=b=>fetch('https://www.strava.com/oauth/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(b)}).then(x=>x.json());
- try{if(a=='x'){s.id=$('#sid').value.trim();s.sec=$('#ssc').value.trim();const code=$('#scd').value.trim().replace(/.*code=([^&]+).*/,'$1'),j=await post({client_id:s.id,client_secret:s.sec,code,grant_type:'authorization_code'});if(!j.refresh_token)throw 0;s.rt=j.refresh_token;say('Verbonden met Strava. Tik op Nu synchroniseren.')}
- if(a=='s'){const j=await post({client_id:s.id,client_secret:s.sec,refresh_token:s.rt,grant_type:'refresh_token'});if(!j.access_token)throw 0;s.rt=j.refresh_token||s.rt;const L=await(await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=60&after='+Math.floor(Date.now()/1000-35*864e5),{headers:{Authorization:'Bearer '+j.access_token}})).json(),acts=L.filter(x=>/run/i.test(x.type)).map(x=>({d:x.start_date_local.slice(0,10),k:x.distance/1000}));if(S.plan.length)applyActs(acts);say(acts.length+' loopjes opgehaald. '+(S.msg||''))}}
- catch(e){say('Verbinden mislukt. Dit werkt enkel in de geïnstalleerde versie met internet. Controleer ID, secret en code.')}}
+ try{if(a=='x'){s.id=$('#sid').value.trim();s.sec=$('#ssc').value.trim();const code=$('#scd').value.trim().replace(/.*code=([^&]+).*/,'$1'),j=await post({client_id:s.id,client_secret:s.sec,code,grant_type:'authorization_code'});if(!j.refresh_token)throw bad(j);s.rt=j.refresh_token;say('Verbonden met Strava. Tik op Nu synchroniseren.')}
+ if(a=='s'){const j=await post({client_id:s.id,client_secret:s.sec,refresh_token:s.rt,grant_type:'refresh_token'});if(!j.access_token)throw bad(j);s.rt=j.refresh_token||s.rt;const L=await(await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=60&after='+Math.floor(Date.now()/1000-35*864e5),{headers:{Authorization:'Bearer '+j.access_token}})).json(),acts=L.filter(x=>/run/i.test(x.type)).map(x=>({d:x.start_date_local.slice(0,10),k:x.distance/1000}));if(S.plan.length)applyActs(acts);say(acts.length+' loopjes opgehaald. '+(S.msg||''))}}
+ catch(e){say('Verbinden mislukt: '+se(e))}}
 let ask=null;
 /* Uitbreidbaar: voeg een doel toe in GOALS of een oefenreeks in EX */
 const EX={A:['Excentrische kuitheffen, rechte knie: 3×15 (3 sec zakken)','Excentrische kuitheffen, gebogen knie: 3×15','Glute bridge: 3×12','Zijwaartse plank: 3×30 sec per kant','Balans op één been: 3×30 sec'],
@@ -162,8 +162,8 @@ function gen(p){
  let build=Math.max(p.weekly,8),id=0;
  for(let w=0;w<p.weeks;w++){
   const last=w==p.weeks-1,dl=w%(p.age>=50?3:4)==(p.age>=50?2:3)&&!last;let wk;
-  if(last)wk=build*.6;else if(dl)wk=build*.75;else{build=Math.min(g.peak,build*(1+r));wk=build}
-  let lr=Math.min(g.long,Math.max(3,p.long)+w*.7,wk*.4);if(dl)lr*=.8;if(last)lr*=.7;
+  if(last)wk=build*.6;else if(dl)wk=build*.75;else{build=Math.min(g.peak,w?build*(1+r):build);wk=build}
+  let lr=Math.min(Math.max(g.long,p.long),Math.max(3,p.long,+p.cd||0)+w*.7,Math.min(wk*.55,Math.max(wk*.4,p.long)));if(dl)lr*=.8;if(last)lr*=.7;
   const er=(wk-lr)/(n-1),reps=Math.min(4+Math.floor((w-2)/2),8);
   const wr=p.weight>=95?' Wissel eventueel 8 min joggen en 1 min wandelen.':'';
   for(let day=0;day<7;day++){
@@ -261,15 +261,17 @@ MISS.length=0;MISS.push(
 'Een training minder? Je zetel feliciteert je. Ik niet. 😤',
 'Ik heb je schema een dag opgeschoven. Het ziet er nog steeds beledigd uit.');
 const fT=s=>{s=Math.round(s);const h=Math.floor(s/3600),m=Math.floor(s%3600/60),c=s%60;return h?h+':'+pad(m)+':'+pad(c):m+':'+pad(c)};
-const PD={name:'',age:35,weight:75,weekly:15,long:6,goal:'10k',weeks:12,days:4,goalText:'',t5:'',t10:'',t21:'',start:today};
+const PD={name:'',age:35,weight:75,weekly:15,long:6,goal:'10k',weeks:12,days:4,goalText:'',t5:'',t10:'',t21:'',cd:'',ct:'',start:today};
 let ptab='g',det=null;
-function sp(){const o=Object.assign({},PD,S.p||{}),v=id=>{const e=$('#'+id);return e?e.value:null},m={pn:['name',0],pa:['age',1],pw:['weight',1],pk:['weekly',1],pl:['long',1],t5:['t5',0],t10:['t10',0],t21:['t21',0],pg:['goal',0],pt:['goalText',0],pe:['weeks',1],pd:['days',1],ps:['start',0]};
+function sp(){const o=Object.assign({},PD,S.p||{}),v=id=>{const e=$('#'+id);return e?e.value:null},m={pn:['name',0],pa:['age',1],pw:['weight',1],pk:['weekly',1],pl:['long',1],pcd:['cd',0],pct:['ct',0],t5:['t5',0],t10:['t10',0],t21:['t21',0],pg:['goal',0],pt:['goalText',0],pe:['weeks',1],pd:['days',1],ps:['start',0]};
  for(const k in m){const x=v(k);if(x!==null){const f=m[k][0];o[f]=m[k][1]?(+x||o[f]):x}}
  o.weeks=Math.min(40,Math.max(4,o.weeks));o.start=o.start||today;S.p=o;save()}
 function zones(p){const T=[[5,p.t5],[10,p.t10],[21.1,p.t21]].map(x=>[x[0],tsec(x[1])]).filter(x=>x[1]>0),hm=Math.round(208-.7*(p.age||35)),hr=(a,c)=>Math.round(hm*a)+'–'+Math.round(hm*c)+' bpm',
- b=T.length?T.reduce((s,x)=>s+x[1]*Math.pow(10/x[0],1.06),0)/T.length/10:0,ag=p.age>=40?1.02:1,f=(a,c)=>b?fm(b*a)+' – '+fm(b*c)+' /km':'vul een racetijd in';
+ b=T.length?T.reduce((s,x)=>s+x[1]*Math.pow(10/x[0],1.06),0)/T.length/10:(+p.cd>0&&tsec(p.ct)>0?tsec(p.ct)/(+p.cd)/1.27:0),ag=p.age>=40?1.02:1,f=(a,c)=>b?fm(b*a)+' – '+fm(b*c)+' /km':'vul een racetijd in';
  return{hm,b,rows:[['Z1','Herstel',f(1.4,1.55),hr(.5,.6),'#8b95b0'],['Z2','Rustig en duurloop',f(1.22*ag,1.32*ag),hr(.6,.7),'#12b76a'],['Z3','Stevig',f(1.1,1.18),hr(.7,.8),'#1d9bf0'],['Z4','Zachte intervallen (maximum)',f(1.03,1.08),hr(.8,.88),'#ff9f1c'],['Z5','Snel: vermijden (achilles)',b?'sneller dan '+fm(b*1.03)+' /km':'–',hr(.88,1),'#ff2d6f']]}}
-async function stravaTok(){const s=S.sv||{},j=await fetch('https://www.strava.com/oauth/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:s.id,client_secret:s.sec,refresh_token:s.rt,grant_type:'refresh_token'})}).then(x=>x.json());if(!j.access_token)throw 0;s.rt=j.refresh_token||s.rt;return j.access_token}
+const bad=j=>new Error(j&&j.message?'Strava zegt: '+j.message+'. Controleer Client ID, secret en of de code vers is (die werkt maar één keer, enkele minuten).':'geen toegang gekregen van Strava');
+const se=e=>{const m=e&&e.message?e.message:'';return /fetch|network|load failed/i.test(m)?'de browser kon Strava niet bereiken. Controleer je internet en of je de geïnstalleerde versie gebruikt (niet de claude.ai-link). Lukt het dan nog niet, dan blokkeert Strava waarschijnlijk rechtstreekse verbindingen vanuit een webpagina (CORS).':(m||'onbekende fout')};
+async function stravaTok(){const s=S.sv||{},j=await fetch('https://www.strava.com/oauth/token',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({client_id:s.id,client_secret:s.sec,refresh_token:s.rt,grant_type:'refresh_token'})}).then(x=>x.json());if(!j.access_token)throw bad(j);s.rt=j.refresh_token||s.rt;return j.access_token}
 async function svStats(){sp();const say=t=>{S.svm=t;save();document.querySelectorAll('#svm2,#svm').forEach(m=>m.textContent=t)};
  if(!(S.sv&&S.sv.rt)){say('Koppel eerst Strava (kaart hieronder).');return}
  try{say('Bezig met ophalen…');const tk=await stravaTok(),L=await fetch('https://www.strava.com/api/v3/athlete/activities?per_page=200&after='+Math.floor(Date.now()/1000-365*864e5),{headers:{Authorization:'Bearer '+tk}}).then(x=>x.json()),R=L.filter(x=>/run/i.test(x.type)&&x.distance>0),from=add(today,-28),rec=R.filter(x=>x.start_date_local.slice(0,10)>=from),
@@ -278,7 +280,7 @@ async function svStats(){sp();const say=t=>{S.svm=t;save();document.querySelecto
   const t5=best(5000,5600,5000),t10=best(10000,11000,10000),t21=best(21097,22500,21097);if(t5)p.t5=t5;if(t10)p.t10=t10;if(t21)p.t21=t21;
   if(S.plan.length)applyActs(R.map(x=>({d:x.start_date_local.slice(0,10),k:x.distance/1000})));
   say('Gesynchroniseerd: '+rec.length+' loopjes in de laatste 4 weken. Tijden zijn een schatting uit je snelste loopjes; pas ze gerust aan.');save();r()}
- catch(e){say('Synchroniseren mislukt. Dit werkt enkel in de geïnstalleerde versie met internet, nadat Strava gekoppeld is.')}}
+ catch(e){say('Synchroniseren mislukt: '+se(e))}}
 function mk2(){sp();const p=S.p;S.plan=paceIt(gen(p),p);S.warn=feas(p);S.adj='';save();tab='v';r()}
 function resetAll(){S={p:null,plan:[],sleep:{},photo:'',inbox:[],last:''};save();$('#v').innerHTML='';ap();ptab='g';r()}
 function pTab(){sp();const p=S.p,F=(id,l,v,x)=>`<label>${l}</label><input id="${id}" value="${esc(v)}" ${x||''}>`,
@@ -291,7 +293,7 @@ function pTab(){sp();const p=S.p,F=(id,l,v,x)=>`<label>${l}</label><input id="${
  <div class="c"><button class="b g" onclick="if(confirm('Alle gegevens wissen?'))resetAll()">Alle gegevens wissen</button></div>`;
  if(ptab=='s'){const z=zones(p),pr=z.b?[5,10,21.0975,42.195].map(d=>fT(z.b*10*Math.pow(d/10,1.06))):null;
   h+=`<div class="mu" style="margin-bottom:10px">Je huidige niveau. Vul het zelf in of haal het op uit Strava. Hieruit worden je tempo en zones berekend.</div>
- <div class="c"><div class="g2"><div>${F('pk','Km per week',p.weekly,'type="number"')}</div><div>${F('pl','Langste loop (km)',p.long,'type="number"')}</div><div>${F('t5','Tijd 5 km',p.t5,'placeholder="mm:ss"')}</div><div>${F('t10','Tijd 10 km',p.t10,'placeholder="mm:ss"')}</div><div>${F('t21','Tijd 21 km',p.t21,'placeholder="u:mm:ss"')}</div></div>
+ <div class="c"><div class="g2"><div>${F('pk','Km per week',p.weekly,'type="number"')}</div><div>${F('pl','Langste loop (km)',p.long,'type="number"')}</div><div>${F('t5','Tijd 5 km',p.t5,'placeholder="mm:ss"')}</div><div>${F('t10','Tijd 10 km',p.t10,'placeholder="mm:ss"')}</div><div>${F('t21','Tijd 21 km',p.t21,'placeholder="u:mm:ss"')}</div><div>${F('pcd','Recente rustige loop (km)',p.cd,'type="number" step="0.1" placeholder="bv. 8"')}</div><div>${F('pct','Tijd van die loop',p.ct,'placeholder="u:mm:ss"')}</div></div><div class="mu">Heb je geen racetijden? Vul dan een recente rustige loop in (afstand en tijd). Je schema start vanaf dit niveau en je tempo wordt hieruit berekend.</div>
  <button class="b" onclick="svStats()">Synchroniseer vanuit Strava</button><button class="b g" onclick="sp();r()">Zones bijwerken</button><div id="svm2" class="mu" style="margin-top:8px">${esc(S.svm||'')}</div></div>
  <div class="c"><h3>Mijn zones</h3><div style="overflow-x:auto"><table class="zt"><tr><th>Zone</th><th>Soort</th><th>Tempo</th><th>Hartslag</th></tr>${z.rows.map(r=>`<tr><td><i class="dt" style="background:${r[4]}"></i> ${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td>${r[3]}</td></tr>`).join('')}</table></div>
  <div class="mu" style="margin-top:8px">Geschatte maximale hartslag ${z.hm} bpm (op basis van je leeftijd).${pr?` Voorspelde tijden: 5 km ${pr[0]} · 10 km ${pr[1]} · halve marathon ${pr[2]} · marathon ${pr[3]}.`:''}</div></div>
@@ -302,7 +304,7 @@ function pTab(){sp();const p=S.p,F=(id,l,v,x)=>`<label>${l}</label><input id="${
  <div class="c"><label>Doel</label><select id="pg">${Object.keys(GOALS).map(x=>`<option value="${x}"${x==p.goal?' selected':''}>${GOALS[x].n}</option>`).join('')}</select>${F('pt','Eigen omschrijving van je doel',p.goalText,'placeholder="bv. Ultra in juni"')}
  <div class="g2"><div>${F('pe','Aantal weken',p.weeks,'type="number" min="4" max="40"')}</div><div>${F('ps','Startdatum',p.start,'type="date"')}</div></div>
  <label>Looptrainingen per week</label><select id="pd">${[3,4,5].map(x=>`<option${x==p.days?' selected':''}>${x}</option>`).join('')}</select>
- <button class="b" onclick="mk2()">Genereer schema</button><div class="mu" style="margin-top:8px">Opbouw maximaal 5 tot 10% per week, om de 3 of 4 weken een rustweek en alleen zachte intervallen, met extra zorg voor je achillespezen.</div></div>
+ <button class="b" onclick="mk2()">Genereer schema</button><div class="mu" style="margin-top:8px">Je schema start op jouw huidige niveau: ${p.weekly} km per week en een langste loop van ${p.long} km${+p.cd?', recente loop '+p.cd+' km':''}. Opbouw maximaal 5 tot 10% per week, om de 3 of 4 weken een rustweek en alleen zachte intervallen, met extra zorg voor je achillespezen.</div></div>
  <div class="c"><h3>Huidig schema</h3><div class="mu">${n?`${n} dagen gepland van ${S.plan[0].date} tot ${S.plan[n-1].date}, samen ongeveer ${Math.round(S.plan.reduce((s,x)=>s+x.km,0))} km.`:'Nog geen schema.'}</div>${n?'<button class="b g" onclick="cancelPlan()">Training annuleren</button>':''}</div>
  <div class="c"><h3>Weerbericht</h3><a href="https://www.buienradar.be" target="_blank" rel="noopener">Buienradar</a> · <a href="https://www.meteo.be" target="_blank" rel="noopener">KMI</a> · <a href="https://www.windy.com" target="_blank" rel="noopener">Windy</a></div>`}
  return h}
